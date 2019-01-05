@@ -8,7 +8,8 @@ import SearchPage from './pages/Search'
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    books: [],
+    booksOnSearchResult: []
   }
 
   componentDidMount() {
@@ -19,14 +20,30 @@ class BooksApp extends React.Component {
     })
   }
 
+  clearQuery = (query) => {
+    this.setState(() => ({
+      booksOnSearchResult: []
+    }))
+  }
+
+  searchBooks = (query) => {
+    BooksAPI.search(query).then((books) => {
+      this.setState(() => ({
+        booksOnSearchResult: books
+      }))
+    })
+  }
+
   render() {
-    console.log(this.state.books)
     return (
       <div className="app">
-        <Route exact path='/search' component={SearchPage} />
+        <Route
+          exact path='/search'
+          render={(props) => <SearchPage books={this.state.booksOnSearchResult} onSubmitQuery={this.searchBooks} onClearQuery={this.clearQuery} isAuthed={true} />}
+        />
         <Route
           exact path='/'
-          render={(props) => <BookcasePage {...props} books={this.state.books} isAuthed={true} />}
+          render={(props) => <BookcasePage books={this.state.books} isAuthed={true} />}
         />
       </div>
     )
