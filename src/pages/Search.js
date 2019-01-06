@@ -45,7 +45,11 @@ class Search extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          <Shelf title="Search Result" books={books} filter="*" />
+          <Shelf
+            title="Search Result"
+            books={books}
+            filter="*"
+            onChangeShelf={this.props.onChangeShelf} />
         </div>
       </div>
     )

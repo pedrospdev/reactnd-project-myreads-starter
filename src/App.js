@@ -13,6 +13,10 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
+    this.getBooksHandler();
+  }
+
+  getBooksHandler = () => {
     BooksAPI.getAll().then((books) => {
       if (books.hasOwnProperty('error')) {
           console.log(books.error)
@@ -49,16 +53,31 @@ class BooksApp extends React.Component {
     }
   }
 
+  shelfChangeHandler = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(() => {
+      this.getBooksHandler()
+    })
+  }
+
   render() {
     return (
       <div className="app">
         <Route
           exact path='/search'
-          render={(props) => <SearchPage books={this.state.booksOnSearchResult} onChangeSearchQuery={this.searchHandler} isAuthed={true} />}
+          render={(props) => <SearchPage
+                                books={this.state.booksOnSearchResult}
+                                onChangeSearchQuery={this.searchHandler}
+                                onChangeShelf={this.shelfChangeHandler}
+                                isAuthed={true}
+                             />}
         />
         <Route
           exact path='/'
-          render={(props) => <BookcasePage books={this.state.books} isAuthed={true} />}
+          render={(props) => <BookcasePage
+                                books={this.state.books}
+                                onChangeShelf={this.shelfChangeHandler}
+                                isAuthed={true}
+                             />}
         />
       </div>
     )

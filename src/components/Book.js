@@ -10,7 +10,7 @@ function Book (props) {
     <div className="book">
       <div className="book-top">
         <BookCover {...props} />
-        <ShelfChanger />
+        <ShelfChanger {...props} onChangeShelf={props.onChangeShelf} />
       </div>
       <div className="book-title">{props.title}</div>
       <BookAuthors authors={props.authors} />
