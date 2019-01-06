@@ -9,7 +9,7 @@ function ShelfChanger (props) {
 
   return (
     <div className="book-shelf-changer">
-      <select onChange={(event) => props.onChangeShelf(props, event.target.value)}>
+      <select value="move" onChange={(event) => props.onChangeShelf(props, event.target.value)}>
         <option value="move" disabled>Move to...</option>
         {actualShelf !== 'currentlyreading' && (
           <option value="currentlyReading">Currently Reading</option>

@@ -32,7 +32,7 @@ class BooksApp extends React.Component {
     const actualQuery = (query != null && (typeof query == 'string' || query instanceof String)) ? query.trim() : ''
 
     // Se a query atual for vazia, reseta o estado da lista de livros na busca e da query de pesquisa
-    if (actualQuery === '') {
+    if (actualQuery === '' && this.state.booksOnSearchResult.length > 0) {
       this.setState(() => ({
         booksOnSearchResult: []
       }))
