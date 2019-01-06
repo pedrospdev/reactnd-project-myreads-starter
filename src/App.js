@@ -39,27 +39,32 @@ class BooksApp extends React.Component {
     }
     else {
       BooksAPI.search(query).then((books) => {
-        if (books.hasOwnProperty('error')) {
-          console.log(books.error)
-          this.setState(() => ({
-            booksOnSearchResult: []
-          }))
-        } else {
-          // Verifica quais livros da busca já estão em uma prateleira e configura ou adiciona a propriedade 'shelf'
-          // Cria uma lista chave-valor para uma busca mais rápida
-          const booksAlreadyOnShelf = {}
-          this.state.books.map((b) => ( booksAlreadyOnShelf[b.id] = b.shelf ))
+        if (books != null) {
+          if (books.hasOwnProperty('error')) {
+            console.log(books.error)
+            this.setState(() => ({
+              booksOnSearchResult: []
+            }))
+          } else {
+            // Verifica quais livros da busca já estão em uma prateleira e configura ou adiciona a propriedade 'shelf'
+            // Cria uma lista chave-valor para uma busca mais rápida
+            const booksAlreadyOnShelf = {}
+            this.state.books.map((b) => ( booksAlreadyOnShelf[b.id] = b.shelf ))
 
-          // Configura a propriedade 'shelf' caso o livro já esteja na lista anterior
-          books.forEach((book) => {
-            if (booksAlreadyOnShelf[book.id] !== null) {
-              book.shelf = booksAlreadyOnShelf[book.id]
-            }
-          })
+            // Configura a propriedade 'shelf' caso o livro já esteja na lista anterior
+            // PONTO DE ATENÇÃO: Essa manuntenção na lista retornada é baseada no ID retornado pela API.
+            // Existe pelo menos uma busca que retorna livros repetidos (Linux).
+            // Neste caso, titulos iguais podem apresentar configurações diferentes!
+            books.forEach((book) => {
+              if (booksAlreadyOnShelf[book.id] !== null) {
+                book.shelf = booksAlreadyOnShelf[book.id]
+              }
+            })
 
-          this.setState(() => ({
-            booksOnSearchResult: books
-          }))
+            this.setState(() => ({
+              booksOnSearchResult: books
+            }))
+          }
         }
       })
     }
