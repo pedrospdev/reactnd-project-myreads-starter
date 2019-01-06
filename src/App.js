@@ -9,22 +9,19 @@ import SearchPage from './pages/Search'
 class BooksApp extends React.Component {
   state = {
     books: [],
-    booksOnSearchResult: [],
-    searchQuery: ''
+    booksOnSearchResult: []
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      this.setState(() => ({
-        books
-      }))
+      if (books.hasOwnProperty('error')) {
+          console.log(books.error)
+      } else {
+        this.setState(() => ({
+          books
+        }))
+      }
     })
-  }
-
-  clearQuery = (query) => {
-    this.setState(() => ({
-      booksOnSearchResult: []
-    }))
   }
 
   searchHandler = (query) => {
@@ -33,16 +30,21 @@ class BooksApp extends React.Component {
     // Se a query atual for vazia, reseta o estado da lista de livros na busca e da query de pesquisa
     if (actualQuery === '') {
       this.setState(() => ({
-        booksOnSearchResult: [],
-        searchQuery: ''
+        booksOnSearchResult: []
       }))
     }
     else {
       BooksAPI.search(query).then((books) => {
-        this.setState(() => ({
-          booksOnSearchResult: books,
-          searchQuery: actualQuery
-        }))
+        if (books.hasOwnProperty('error')) {
+          console.log(books.error)
+          this.setState(() => ({
+            booksOnSearchResult: []
+          }))
+        } else {
+          this.setState(() => ({
+            booksOnSearchResult: books
+          }))
+        }
       })
     }
   }
@@ -52,7 +54,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route
           exact path='/search'
-          render={(props) => <SearchPage books={this.state.booksOnSearchResult} onChangeSearchQuery={this.searchHandler} query={this.state.searchQuery} isAuthed={true} />}
+          render={(props) => <SearchPage books={this.state.booksOnSearchResult} onChangeSearchQuery={this.searchHandler} isAuthed={true} />}
         />
         <Route
           exact path='/'

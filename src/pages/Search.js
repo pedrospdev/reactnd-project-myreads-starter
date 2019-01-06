@@ -10,8 +10,18 @@ class Search extends React.Component {
     onChangeSearchQuery: PropTypes.func.isRequired
   }
 
+  state = {
+    query: ''
+  }
+
+  updateQuery = (query) => {
+    this.setState({
+      query
+    }, () => { this.props.onChangeSearchQuery(query); })
+  }
+
   render() {
-    const { books, query, onChangeSearchQuery } = this.props
+    const { books } = this.props
 
     return (
       <div className="search-books">
@@ -29,13 +39,13 @@ class Search extends React.Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              value={query}
-              onChange={(event) => this.props.onChangeSearchQuery(event.target.value)}
+              value={this.state.query}
+              onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
         </div>
         <div className="search-books-results">
-          <Shelf title="Search Result" books={this.props.books} filter="*" />
+          <Shelf title="Search Result" books={books} filter="*" />
         </div>
       </div>
     )
