@@ -1,5 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
+import BookAuthors from './BookAuthors'
 import ShelfChanger from './ShelfChanger'
 
 function Book (props) {
@@ -10,9 +12,15 @@ function Book (props) {
         <ShelfChanger />
       </div>
       <div className="book-title">{props.title}</div>
-      <div className="book-authors">{props.authors}</div>
+      <BookAuthors authors={props.authors} />
     </div>
   )
 }
+
+Book.propTypes = {
+  title: PropTypes.string.isRequired,
+  authors: PropTypes.array,
+  backgroundImageUrl: PropTypes.string
+};
 
 export default Book

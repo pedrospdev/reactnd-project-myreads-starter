@@ -7,32 +7,11 @@ import Shelf from '../components/Shelf'
 class Search extends React.Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onSubmitQuery: PropTypes.func.isRequired,
-    onClearQuery: PropTypes.func.isRequired
-  }
-
-  state = {
-    query: ''
-  }
-
-  updateQuery = (query) => {
-    if (query != null && query.trim().toLowerCase() !== this.state.query) {
-      this.setState(() => ({
-        query: query.trim()
-      }))
-
-      if(query !== '') {
-        this.props.onSubmitQuery(this.state.query);
-      }
-      else {
-        this.props.onClearQuery();
-      }
-    }
+    onChangeSearchQuery: PropTypes.func.isRequired
   }
 
   render() {
-    const { query } = this.state
-    const { books, onSubmitQuery, onClearQuery } = this.props
+    const { books, query, onChangeSearchQuery } = this.props
 
     return (
       <div className="search-books">
@@ -51,7 +30,7 @@ class Search extends React.Component {
               type="text"
               placeholder="Search by title or author"
               value={query}
-              onChange={(event) => this.updateQuery(event.target.value)}
+              onChange={(event) => this.props.onChangeSearchQuery(event.target.value)}
             />
           </div>
         </div>

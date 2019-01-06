@@ -9,7 +9,8 @@ import SearchPage from './pages/Search'
 class BooksApp extends React.Component {
   state = {
     books: [],
-    booksOnSearchResult: []
+    booksOnSearchResult: [],
+    searchQuery: ''
   }
 
   componentDidMount() {
@@ -26,12 +27,24 @@ class BooksApp extends React.Component {
     }))
   }
 
-  searchBooks = (query) => {
-    BooksAPI.search(query).then((books) => {
+  searchHandler = (query) => {
+    const actualQuery = (query != null && (typeof query == 'string' || query instanceof String)) ? query.trim() : ''
+
+    // Se a query atual for vazia, reseta o estado da lista de livros na busca e da query de pesquisa
+    if (actualQuery === '') {
       this.setState(() => ({
-        booksOnSearchResult: books
+        booksOnSearchResult: [],
+        searchQuery: ''
       }))
-    })
+    }
+    else {
+      BooksAPI.search(query).then((books) => {
+        this.setState(() => ({
+          booksOnSearchResult: books,
+          searchQuery: actualQuery
+        }))
+      })
+    }
   }
 
   render() {
@@ -39,7 +52,7 @@ class BooksApp extends React.Component {
       <div className="app">
         <Route
           exact path='/search'
-          render={(props) => <SearchPage books={this.state.booksOnSearchResult} onSubmitQuery={this.searchBooks} onClearQuery={this.clearQuery} isAuthed={true} />}
+          render={(props) => <SearchPage books={this.state.booksOnSearchResult} onChangeSearchQuery={this.searchHandler} query={this.state.searchQuery} isAuthed={true} />}
         />
         <Route
           exact path='/'

@@ -19,7 +19,7 @@ function Shelf (props) {
         <ol className="books-grid">
           {booksOnShelf != null && booksOnShelf.constructor === Array && booksOnShelf.map((book) => (
             <li key={book.id}>
-              <Book title={book.title} authors={book.autors} backgroundImageUrl={book.imageLinks.thumbnail} />
+              <Book title={book.title} authors={book.authors} backgroundImageUrl={book.imageLinks.thumbnail} />
             </li>
           ))}
         </ol>
