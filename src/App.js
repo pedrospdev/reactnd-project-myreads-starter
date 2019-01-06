@@ -45,6 +45,18 @@ class BooksApp extends React.Component {
             booksOnSearchResult: []
           }))
         } else {
+          // Verifica quais livros da busca já estão em uma prateleira e configura ou adiciona a propriedade 'shelf'
+          // Cria uma lista chave-valor para uma busca mais rápida
+          const booksAlreadyOnShelf = {}
+          this.state.books.map((b) => ( booksAlreadyOnShelf[b.id] = b.shelf ))
+
+          // Configura a propriedade 'shelf' caso o livro já esteja na lista anterior
+          books.forEach((book) => {
+            if (booksAlreadyOnShelf[book.id] !== null) {
+              book.shelf = booksAlreadyOnShelf[book.id]
+            }
+          })
+
           this.setState(() => ({
             booksOnSearchResult: books
           }))
