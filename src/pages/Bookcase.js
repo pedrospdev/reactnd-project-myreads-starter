@@ -8,7 +8,7 @@ import Zoom from '@material-ui/core/Zoom'
 // Componentes da aplicação
 import Shelf from '../components/Shelf'
 
-class Bookcase extends React.Component{
+class Bookcase extends React.Component {
   render() {
     return (
       <div className="list-books">
