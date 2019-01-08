@@ -82,8 +82,6 @@ class BooksApp extends React.Component {
   }
 
   updateShelfs = (bookId, shelf) => {
-    let stateWasUpdated = false
-
     // Se o livro já pertence a alguma prateleira, apenas muda a propriedade
     // 'shelf'
     // Ajusta livros que já estão no state 'books'
@@ -96,8 +94,6 @@ class BooksApp extends React.Component {
       this.setState(() => ({
         books: newBooksState
       }))
-
-      stateWasUpdated = true
     }
 
     // Ajusta livros que já estão no state 'booksOnSarchResult'
@@ -110,15 +106,14 @@ class BooksApp extends React.Component {
       this.setState(() => ({
         booksOnSearchResult: newBooksStateSearch
       }))
-
-      stateWasUpdated = true
     }
 
     // No escopo desta aplicação, este método 'updateShelfs' só é chamado pela
-    // página principal e pela página de busca. Se o estado não foi atualizado,
-    // a chamada veio da página de busca por um livro não listado. Neste caso,
-    // deve chamar novamente a API para refletir o estado persistido.
-    if (!stateWasUpdated) {
+    // página principal e pela página de busca. Logo, se o livro foi encontrado
+    // apenas na coleção da busca atual, a chamada veio da página de busca e a
+    // aplicação deve chamar novamente a API para refletir o estado persistido.
+    if ((indexOfBookOnState == null || indexOfBookOnState === -1) &&
+        (indexOfBookOnStateSearch != null && indexOfBookOnStateSearch >= 0)) {
       this.getBooksHandler()
     }
   }
