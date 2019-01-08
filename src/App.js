@@ -1,15 +1,34 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
+// Dependencios da biblioteca Material-UI
+import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import CloseIcon from '@material-ui/icons/Close'
+import IconButton from '@material-ui/core/IconButton'
+import Snackbar from '@material-ui/core/Snackbar'
+
+// Componentes da aplicação
 import BookcasePage from './pages/Bookcase'
 import SearchPage from './pages/Search'
 
+const styles = theme => ({
+  close: {
+    padding: theme.spacing.unit / 2,
+  },
+});
+
 class BooksApp extends React.Component {
+  queue = [];
+
   state = {
     books: [],
-    booksOnSearchResult: []
+    booksOnSearchResult: [],
+    isSnackOpen: false,
+    messageInfo: {},
   }
 
   componentDidMount() {
@@ -19,7 +38,7 @@ class BooksApp extends React.Component {
   getBooksHandler = () => {
     BooksAPI.getAll().then((books) => {
       if (books.hasOwnProperty('error')) {
-          console.log(books.error)
+          this.showMessageHandler('Erro ao buscar livros: ' + books.error)
       } else {
         this.setState(() => ({
           books
@@ -42,7 +61,7 @@ class BooksApp extends React.Component {
       BooksAPI.search(query).then((books) => {
         if (books != null) {
           if (books.hasOwnProperty('error')) {
-            console.log(books.error)
+            this.showMessageHandler('Error for query [' + query + ']: ' + books.error)
             this.setState(() => ({
               booksOnSearchResult: []
             }))
@@ -126,7 +145,47 @@ class BooksApp extends React.Component {
     })
   }
 
+  // Handlers e métodos do Material-UI, implementados conforme exemplo na página
+  // oficial: https://material-ui.com/demos
+  processQueue = () => {
+    if (this.queue.length > 0) {
+      this.setState({
+        messageInfo: this.queue.shift(),
+        isSnackOpen: true,
+      });
+    }
+  }
+
+  showMessageHandler = (message) => {
+    this.queue.push({
+      message,
+      key: new Date().getTime(),
+    });
+
+    if (this.state.isSnackOpen) {
+      // immediately begin dismissing current message
+      // to start showing new one
+      this.setState({ isSnackOpen: false });
+    } else {
+      this.processQueue();
+    }
+  };
+
+  messageCloseHandler = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    this.setState({ isSnackOpen: false });
+  };
+
+  messageExitedHandler = () => {
+    this.processQueue();
+  };
+
   render() {
+    const { classes } = this.props;
+    const { messageInfo } = this.state;
+
     return (
       <div className="app">
         <Route
@@ -146,9 +205,42 @@ class BooksApp extends React.Component {
                                 isAuthed={true}
                              />}
         />
+        <Snackbar
+          key={messageInfo.key}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          open={this.state.isSnackOpen}
+          autoHideDuration={1750}
+          onClose={this.messageCloseHandler}
+          onExited={this.messageExitedHandler}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{messageInfo.message}</span>}
+          action={[
+            <Button key="undo" color="secondary" size="small" onClick={this.messageCloseHandler}>
+              Close
+            </Button>,
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.messageCloseHandler}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </div>
     )
   }
 }
 
-export default BooksApp
+BooksApp.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(BooksApp)

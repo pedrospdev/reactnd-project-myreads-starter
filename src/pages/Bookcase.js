@@ -1,6 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+// Dependencios da biblioteca Material-UI
+import Tooltip from '@material-ui/core/Tooltip'
+import Zoom from '@material-ui/core/Zoom'
+
+// Componentes da aplicação
 import Shelf from '../components/Shelf'
 
 class Bookcase extends React.Component{
@@ -33,7 +38,13 @@ class Bookcase extends React.Component{
           </div>
         </div>
         <div className="open-search">
-          <Link to="/search">Add a book</Link>
+          <Tooltip
+            title="Search for new books"
+            placement="right-start"
+            TransitionComponent={Zoom}
+          >
+            <Link to="/search">Add a book</Link>
+          </Tooltip>
         </div>
       </div>
     )
