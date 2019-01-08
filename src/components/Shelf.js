@@ -5,7 +5,6 @@ import Book from './Book'
 
 function Shelf (props) {
   const { books, filter } = props
-
   let booksOnShelf = books;
 
   if (filter != null && filter.trim() !== '' && filter !== '*') {
@@ -19,7 +18,7 @@ function Shelf (props) {
         <ol className="books-grid">
           {booksOnShelf != null && booksOnShelf.constructor === Array && booksOnShelf.map((book) => (
             <li key={book.id}>
-              <Book title={book.title} authors={book.authors} backgroundImageUrl={book.imageLinks.thumbnail} />
+              <Book {...book} onChangeShelf={props.onChangeShelf} />
             </li>
           ))}
         </ol>
