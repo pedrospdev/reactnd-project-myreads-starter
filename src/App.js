@@ -61,7 +61,7 @@ class BooksApp extends React.Component {
       BooksAPI.search(query).then((books) => {
         if (books != null) {
           if (books.hasOwnProperty('error')) {
-            this.showMessageHandler('Error for query [' + query + ']: ' + books.error)
+            this.showMessageHandler('Query "' + query + '" resulted in an error: ' + books.error)
             this.setState(() => ({
               booksOnSearchResult: []
             }))
@@ -94,13 +94,17 @@ class BooksApp extends React.Component {
     }
   }
 
-  shelfChangeHandler = (book, shelf) => {
+  shelfChangeHandler = (book, shelf, shelfName) => {
     BooksAPI.update(book, shelf).then(() => {
-      this.updateShelfs(book.id, shelf)
+      this.updateShelfs(book.id, shelf, shelfName)
     })
   }
 
-  updateShelfs = (bookId, shelf) => {
+  showShelfChangeMessage = (title, shelf) => {
+    this.showMessageHandler('"' + title + '" moved to ' + shelf)
+  }
+
+  updateShelfs = (bookId, shelf, shelfName) => {
     // Se o livro já pertence a alguma prateleira, apenas muda a propriedade
     // 'shelf'
     // Ajusta livros que já estão no state 'books'
@@ -112,7 +116,7 @@ class BooksApp extends React.Component {
 
       this.setState(() => ({
         books: newBooksState
-      }))
+      }), () => { this.showShelfChangeMessage(newBooksState[indexOfBookOnState].title, shelfName); })
     }
 
     // Ajusta livros que já estão no state 'booksOnSarchResult'
@@ -124,7 +128,7 @@ class BooksApp extends React.Component {
 
       this.setState(() => ({
         booksOnSearchResult: newBooksStateSearch
-      }))
+      }), () => { this.showShelfChangeMessage(newBooksStateSearch[indexOfBookOnStateSearch].title, shelfName); })
     }
 
     // No escopo desta aplicação, este método 'updateShelfs' só é chamado pela
@@ -209,10 +213,10 @@ class BooksApp extends React.Component {
           key={messageInfo.key}
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'center',
+            horizontal: 'left',
           }}
           open={this.state.isSnackOpen}
-          autoHideDuration={1750}
+          autoHideDuration={2000}
           onClose={this.messageCloseHandler}
           onExited={this.messageExitedHandler}
           ContentProps={{

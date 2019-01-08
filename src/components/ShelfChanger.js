@@ -5,6 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 import Zoom from '@material-ui/core/Zoom'
 
 function ShelfChanger (props) {
+  const { onChangeShelf } = props
   let actualShelf = 'none'
 
   if (props.hasOwnProperty('shelf') && (typeof props.shelf == 'string' || props.shelf instanceof String)) {
@@ -18,7 +19,7 @@ function ShelfChanger (props) {
         placement="top"
         TransitionComponent={Zoom}
       >
-        <select value={actualShelf} onChange={(event) => props.onChangeShelf(props, event.target.value)}>
+        <select value={actualShelf} onChange={(event) => onChangeShelf(props, event.target.value, event.target.options[event.target.selectedIndex].text)}>
           <option value="move" disabled>Move to...</option>
           <option value="currentlyReading">Currently Reading</option>
           <option value="wantToRead">Want to Read</option>
