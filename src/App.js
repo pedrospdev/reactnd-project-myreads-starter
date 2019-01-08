@@ -3,8 +3,6 @@ import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 
-import update from 'immutability-helper';
-
 import BookcasePage from './pages/Bookcase'
 import SearchPage from './pages/Search'
 
