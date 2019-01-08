@@ -1,22 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function BookAuthors (props) {
-  let authorsList = ''
+  let authorsList = '';
 
   if (typeof props.authors == 'string' || props.authors instanceof String) {
-    authorsList = props.authors
+    authorsList = props.authors;
   }
   else if (Array.isArray(props.authors)) {
     props.authors.forEach(function (value, idx) {
-      authorsList += value
+      authorsList += value;
 
       // Quando a lista indicar mais de um autor, faz a separação usando ',' e 'and' (se for o último nome)
       if (props.authors.length >= 2) {
         if ((idx + 2) < props.authors.length) {
-          authorsList += ', '
+          authorsList += ', ';
         } else if ((idx + 2) === props.authors.length) {
-          authorsList += ' and '
+          authorsList += ' and ';
         }
       }
     });
@@ -35,4 +35,4 @@ BookAuthors.propTypes = {
   ])
 };
 
-export default BookAuthors
+export default BookAuthors;

@@ -1,15 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 function BookCover (props) {
-  let coverImageUrl = '/images/cover_unavailable.png'
+  let coverImageUrl = '/images/cover_unavailable.png';
 
   if (props.hasOwnProperty('imageLinks') && props.imageLinks.hasOwnProperty('thumbnail')) {
-    const thumbnail = props.imageLinks.thumbnail
+    const thumbnail = props.imageLinks.thumbnail;
 
     // Verificação de null, tipo e string vazio apenas por segurança
     if (thumbnail !== null && (typeof thumbnail == 'string' || thumbnail instanceof String) && thumbnail.trim() !== '') {
-      coverImageUrl = thumbnail
+      coverImageUrl = thumbnail;
     }
   }
 
@@ -22,4 +22,4 @@ BookCover.propTypes = {
   imageUrl: PropTypes.string
 };
 
-export default BookCover
+export default BookCover;

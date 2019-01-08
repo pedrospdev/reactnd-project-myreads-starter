@@ -6,6 +6,7 @@
 ## Fluxo de Desenvolvimento
 
 O projeto foi originado de um fork do repositório de referência. As alterações eventualmente realizadas pela instalação de pacotes NPM e inicialização do projeto original foram commitadas diretamente na branch master.
+
 A partir daí, o desenvolvimento seguiu por duas branches de trabalho (projeto-udacity e material-ui), que passaram por processos de Pull Request conforme a solução ia se mostrando madura o suficiente.
 
 
@@ -16,7 +17,9 @@ Todas os pacotes necessários estão devidamente registrados no arquivo package.
 De qualquer maneira, as bibliotecas incluídas podem ser instaladas da seguinte forma:
 
 `npm i react-router-dom --save`
+
 `npm i @material-ui/core --save`
+
 `npm i @material-ui/icons --save`
 
 

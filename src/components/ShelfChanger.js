@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 // Dependencios da biblioteca Material-UI
-import Tooltip from '@material-ui/core/Tooltip'
-import Zoom from '@material-ui/core/Zoom'
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
 function ShelfChanger (props) {
-  const { onChangeShelf } = props
-  let actualShelf = 'none'
+  const { onChangeShelf } = props;
+  let actualShelf = 'none';
 
   if (props.hasOwnProperty('shelf') && (typeof props.shelf == 'string' || props.shelf instanceof String)) {
     actualShelf = props.shelf.trim()
@@ -31,4 +31,4 @@ function ShelfChanger (props) {
   )
 }
 
-export default ShelfChanger
+export default ShelfChanger;

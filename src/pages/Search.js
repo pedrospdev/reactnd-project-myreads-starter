@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 // Dependencios da biblioteca Material-UI
-import Tooltip from '@material-ui/core/Tooltip'
-import Zoom from '@material-ui/core/Zoom'
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
 // Componentes da aplicação
-import Shelf from '../components/Shelf'
+import Shelf from '../components/Shelf';
 
 class Search extends React.Component {
   static propTypes = {
@@ -23,7 +23,7 @@ class Search extends React.Component {
     this.setState({
       query
     }, () => { this.props.onChangeSearchQuery(query); })
-  }
+  };
 
   render() {
     const { books } = this.props
@@ -73,4 +73,4 @@ class Search extends React.Component {
   }
 }
 
-export default Search
+export default Search;

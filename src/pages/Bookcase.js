@@ -1,12 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 // Dependencios da biblioteca Material-UI
-import Tooltip from '@material-ui/core/Tooltip'
-import Zoom from '@material-ui/core/Zoom'
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
 // Componentes da aplicação
-import Shelf from '../components/Shelf'
+import Shelf from '../components/Shelf';
 
 class Bookcase extends React.Component {
   render() {
@@ -51,4 +51,4 @@ class Bookcase extends React.Component {
   }
 }
 
-export default Bookcase
+export default Bookcase;

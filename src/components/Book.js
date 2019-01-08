@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import BookAuthors from './BookAuthors'
-import BookCover from './BookCover'
-import ShelfChanger from './ShelfChanger'
+import BookAuthors from './BookAuthors';
+import BookCover from './BookCover';
+import ShelfChanger from './ShelfChanger';
 
 function Book (props) {
   return (
@@ -24,4 +24,4 @@ Book.propTypes = {
   backgroundImageUrl: PropTypes.string
 };
 
-export default Book
+export default Book;
