@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Book from './Book'
+import Book from './Book';
 
 function Shelf (props) {
-  const { books, filter } = props
+  const { books, filter } = props;
   let booksOnShelf = books;
 
   if (filter != null && filter.trim() !== '' && filter !== '*') {
-    booksOnShelf = books.filter((b) => (b.shelf.toLowerCase() === filter.toLowerCase()))
+    booksOnShelf = books.filter((b) => (b.shelf.toLowerCase() === filter.toLowerCase()));
   }
 
   return (
@@ -33,4 +33,4 @@ Shelf.propTypes = {
   filter: PropTypes.string.isRequired
 };
 
-export default Shelf
+export default Shelf;

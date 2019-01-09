@@ -1,8 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-import Shelf from '../components/Shelf'
+// Dependencios da biblioteca Material-UI
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
+
+// Componentes da aplicação
+import Shelf from '../components/Shelf';
 
 class Search extends React.Component {
   static propTypes = {
@@ -18,7 +23,7 @@ class Search extends React.Component {
     this.setState({
       query
     }, () => { this.props.onChangeSearchQuery(query); })
-  }
+  };
 
   render() {
     const { books } = this.props
@@ -26,11 +31,19 @@ class Search extends React.Component {
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <Link
-            to="/"
-            className="close-search"
-            onClick={() => this.props.onChangeSearchQuery('')}
-          >Close</Link>
+          <Tooltip
+            title="Go back to main page"
+            placement="bottom-start"
+            TransitionComponent={Zoom}
+          >
+            <Link
+              to="/"
+              className="close-search"
+              onClick={() => this.props.onChangeSearchQuery('')}
+            >
+              Close
+            </Link>
+          </Tooltip>
           <div className="search-books-input-wrapper">
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -60,4 +73,4 @@ class Search extends React.Component {
   }
 }
 
-export default Search
+export default Search;

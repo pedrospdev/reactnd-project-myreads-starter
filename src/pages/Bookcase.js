@@ -1,9 +1,14 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import Shelf from '../components/Shelf'
+// Dependencios da biblioteca Material-UI
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
-class Bookcase extends React.Component{
+// Componentes da aplicação
+import Shelf from '../components/Shelf';
+
+class Bookcase extends React.Component {
   render() {
     return (
       <div className="list-books">
@@ -33,11 +38,17 @@ class Bookcase extends React.Component{
           </div>
         </div>
         <div className="open-search">
-          <Link to="/search">Add a book</Link>
+          <Tooltip
+            title="Search for new books"
+            placement="right-start"
+            TransitionComponent={Zoom}
+          >
+            <Link to="/search">Add a book</Link>
+          </Tooltip>
         </div>
       </div>
     )
   }
 }
 
-export default Bookcase
+export default Bookcase;
